@@ -1,16 +1,35 @@
+# This uses the vjoy device which has been bound 
+# from the X-Touch Mini by the accompanying FreePie script. 
+# Each button press and rotary movement are translated to a button press on the 
+# virtual joystick.
+#
+# It sets up a telnet connection to PSX to send client commands directly. 
+# Some commands are better sent as virtual keypresses and it handles these also.
+# The connection to PSX is "write-only".
+# The layout of the X-Touch Mini is handled by the FreePie script.
+#
+# The precise button numbers on the vjoy device depend on how you have set up
+# the Freepie script - they are not constant. Eg I have defined two "virtual" rotary
+# encoders for the leftmost dial and this has pushed the numbering of all subsquent dials
+# by +2
+
+# Experiment freely, This script will show the number of each X-Touch Mini
+# input as it is made.
+
+# NB needs 'pip install pygame==2.4.0' as newer versions of pygame may contain a regression
+# in which some connected devices are not recognised.
+
+
 import pygame
 import telnetlib
 import time
 from pyautogui import press, hotkey, keyDown, keyUp
 
-
-
-
-# Initialize the pygame
 pygame.init()
 
-# Initialize the joystick
 pygame.joystick.init()
+
+# First section is for commands to be sent directly to PSX as a client
 
 button_commands = {
     1: b"Qh26=1", # CTR
@@ -51,12 +70,16 @@ button_commands = {
     # Add more button-command pairs here
 }
 
+# next section is for commands to be sent as hotkey combinations
+
 button_keys = {
     70: ['alt','k'], # ND mode down
     71: ['alt','l'], # ND mode up
     72: ['alt','a'], # Range down
     73: ['alt','z'], # Range up
 }
+
+# next section is for commands to be send as single keypresses
 
 button_press = {
     23: 'q', # switch standby and COM1 (long press)
@@ -67,10 +90,8 @@ button_press = {
     85: 'e', # small COM1 up
 }
 
-def pushpsx(button_number):
-    # Define your function here
-    print(f"Button {button_number} has been pressed!")
-    
+# Connect to PSX as a client, wait 5s and try again if not ready
+
 def connect():
     host = '127.0.0.1'                         
     port = 10747
@@ -86,33 +107,44 @@ def connect():
     tn.read_very_eager()
     return tn
             
+# This is the main polling loop. Poll for a button press, and then send it to PSX either
+# as a client or via single or combination keypresses
+
 def poll(tn, joystick):
     joystick.init()
-    pygame.event.get() #flush the queue
+    pygame.event.get() #flush the vjoy queue on first connection
     while True:
         for event in pygame.event.get(): # User did something
             if event.type == pygame.JOYBUTTONDOWN:
                 print("Joystick button pressed.", event.button)
-                command = button_commands.get(event.button)
+
+# we have something to send, go through the options
+
+                command = button_commands.get(event.button) # to be sent as client
                 if command:
                     try:
                         tn.write(command+b'\n')
-                    except Exception as e:
+                    except Exception as e:          # fail gracefully if lost connection
                         print(f"Lost connection")
                         return
-                key = button_keys.get(event.button)
+
+                key = button_keys.get(event.button) # to be sent as hotkey
                 if key:
-                    hotkey(key)                  
-                key = button_press.get(event.button)
+                    hotkey(key) 
+
+                key = button_press.get(event.button) # to be sent as single keypress
                 if key:                    
                     keyDown(key)
                     keyUp(key)
-                
+
+# now flush the client input queue, fail gracefully if we have lost the PSX connection
         try:
             tn.read_very_eager()
         except Exception as e:
             print(f"Lost connection")
             return
+
+# Routine to find the vJoy stick out of the list of attached devices
 
 def connect_vjoy():
     # Get the number of joysticks
@@ -139,6 +171,9 @@ def connect_vjoy():
     quit()
 
 # MAIN LOOP
+# connects the vjoy device, connects as a client and then sits in the polling loop.
+# If the polling loop exits it is because of a disconnection, so just loop and
+# wait to be reconnected
 
 joystick = connect_vjoy()
 
