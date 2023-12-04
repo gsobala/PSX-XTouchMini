@@ -36,6 +36,8 @@ Experiment freely, This script will show the number of each X-Touch Mini input a
 
     pip install telnetlib time pyautogui
 
+# Usage
+
 Start FreePie and from there load and start the xmini2vjoy_multi.py script, then run </p>
     `python xt-psx.py`
 
