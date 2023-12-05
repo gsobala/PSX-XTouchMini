@@ -31,7 +31,8 @@ pygame.joystick.init()
 
 # First section is for commands to be sent directly to PSX as a client
 
-button_commands = {
+button_commands = [{
+# First Joystick : vjoy
     1: b"Qh26=1", # CTR
     2: b"Qh27=1", # TFC   
     3: b"Qh60=1", # SPD sel
@@ -66,87 +67,90 @@ button_commands = {
     79: b"Qh80=1", # ALT down
     80: b"Qh79=-1", # VS up
     81: b"Qh79=1", # VS down
-    
+}    
     # Add more button-command pairs here
-}
+]
 
 # next section is for commands to be sent as hotkey combinations
 
-button_keys = {
+button_keys = [{
     70: ['alt','k'], # ND mode down
     71: ['alt','l'], # ND mode up
     72: ['alt','a'], # Range down
     73: ['alt','z'], # Range up
-}
+}]
 
 # next section is for commands to be send as single keypresses
 
-button_press = {
+button_press = [{
     23: 'q', # switch standby and COM1 (long press)
     35: 't',  # A/T ARM
     82: 's', # main COM1 down
     83: 'w', # main COM1 up
     84: 'd', # small COM1 down
     85: 'e', # small COM1 up
-}
+}]
 
 # Connect to PSX as a client, wait 5s and try again if not ready
 
-def connect():
+def connectPSX():
     host = '127.0.0.1'                         
     port = 10747
     while True :
         try:
-            tn = telnetlib.Telnet(host, port)
+            psx = telnetlib.Telnet(host, port)
             break
         except Exception as e:
             print(f"Failed to connect: {e}")
             time.sleep(5)
     print(f"Connected")
     time.sleep(0.1)
-    tn.read_very_eager()
-    return tn
+    psx.read_very_eager()
+    return psx
             
 # This is the main polling loop. Poll for a button press, and then send it to PSX either
 # as a client or via single or combination keypresses
 
-def poll(tn, joystick):
-    joystick.init()
+def poll(psx, joysticks):
     pygame.event.get() #flush the vjoy queue on first connection
     while True:
-        for event in pygame.event.get(): # User did something
-            if event.type == pygame.JOYBUTTONDOWN:
-                print("Joystick button pressed.", event.button)
+        j = 0
+        for joystick in joysticks:
+            joystick.init()
+            for event in pygame.event.get(): # User did something
+                if event.type == pygame.JOYBUTTONDOWN:
+                    print("Joystick button pressed.", event.button)
 
-# we have something to send, go through the options
+    # we have something to send, go through the options
 
-                command = button_commands.get(event.button) # to be sent as client
-                if command:
-                    try:
-                        tn.write(command+b'\n')
-                    except Exception as e:          # fail gracefully if lost connection
-                        print(f"Lost connection")
-                        return
+                    command = button_commands[j].get(event.button) # to be sent as client
+                    if command:
+                        try:
+                            psx.write(command+b'\n')
+                        except Exception as e:          # fail gracefully if lost connection
+                            print(f"Lost connection")
+                            return
 
-                key = button_keys.get(event.button) # to be sent as hotkey
-                if key:
-                    hotkey(key) 
+                    key = button_keys[j].get(event.button) # to be sent as hotkey
+                    if key:
+                        hotkey(key) 
 
-                key = button_press.get(event.button) # to be sent as single keypress
-                if key:                    
-                    keyDown(key)
-                    keyUp(key)
+                    key = button_press[j].get(event.button) # to be sent as single keypress
+                    if key:                    
+                        keyDown(key)
+                        keyUp(key)
 
 # now flush the client input queue, fail gracefully if we have lost the PSX connection
         try:
-            tn.read_very_eager()
+            psx.read_very_eager()
         except Exception as e:
             print(f"Lost connection")
             return
+        j = j + 1
 
 # Routine to find the vJoy stick out of the list of attached devices
 
-def connect_vjoy():
+def connect_joysticks():
     # Get the number of joysticks
     joystick_count = pygame.joystick.get_count()
 
@@ -166,18 +170,27 @@ def connect_vjoy():
         print("\n")
         if joystick.get_name() == "vJoy Device":
             print(f"vJoy found!")
-            return joystick
-    print(f"vJoy not found")
-    quit()
+            vjoy = joystick
+        if joystick.get_name() == "LEFT VPC Throttle MT-50CM3" and joystick.get_numaxes() == 0 and joystick.get_numbuttons() == 32:
+            print(f"Virpil 2 found!")
+            vp2 = joystick
+        if joystick.get_name() == "LEFT VPC Throttle MT-50CM3" and joystick.get_numaxes() == 0 and joystick.get_numbuttons() == 19:
+            print(f"Virpil 3 found!")
+            vp3 = joystick
+    sticks = {vjoy, vp2, vp3}
+    if not sticks:        
+        print(f"Sticks not found")
+        quit()
+    return sticks
 
 # MAIN LOOP
 # connects the vjoy device, connects as a client and then sits in the polling loop.
 # If the polling loop exits it is because of a disconnection, so just loop and
 # wait to be reconnected
 
-joystick = connect_vjoy()
+joysticks = connect_joysticks()
 
 while True:
-    tn = connect()
-    poll(tn, joystick)
-    tn.close()
+    psx = connectPSX()
+    poll(psx, joysticks)
+    psx.close()
