@@ -51,12 +51,10 @@ pygame.init()
 pygame.joystick.init()
 clock = pygame.time.Clock()
 
-# First section is for commands to be sent directly to PSX as a client
 myjoy = {} # this will hold the translation table from physical to virtual joystick numbering set by connect_joysticks()
 
-
-# This table defines each button on each joystick that we want to use
-# The joystick numbering is set by what is used in connect_joysticks() later
+# button_commands defines each button on each joystick that we want to use
+# The joystick numbering is set by connect_joysticks() later
 # For each button define either a single character eg 't', two key hotkey combo as an array 
 # to be sent as keyboard emulation eg ['alt', 'z'],
 # or a PSX command byte string to be sent over the network client to server eg b"Qh69=1"
@@ -159,7 +157,7 @@ def connect_joysticks():
         if joystick.get_name() == "vJoy Device":
             print(f"vJoy found!")
             vjoy = joystick
-            myjoy.update({i : 0})   # the second argument corresponds to the index in the joystick commands array
+            myjoy.update({i : 0})   # the second argument corresponds to the joystick number in the button_commands dict
         if joystick.get_name() == "LEFT VPC Throttle MT-50CM3" and joystick.get_numaxes() == 0 and joystick.get_numbuttons() == 32:
             print(f"Virpil 2 found!")
             vp2 = joystick
