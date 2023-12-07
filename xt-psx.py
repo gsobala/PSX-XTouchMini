@@ -188,7 +188,8 @@ def connectPSX():
             psx = telnetlib.Telnet(host, port)
             break
         except Exception as e:
-            print(f"Failed to connect: {e}")
+            print(f"Failed to connect to PSX: check host and port are correct")
+            print(f"and that PSX is activated in server mode. Will retry in 5 sec.")
             time.sleep(5)
     print(f"Connected")
     time.sleep(0.1)
