@@ -69,6 +69,8 @@ button_commands = {
     5: b"Qh62=1", # ALT sel
     6: b"Qh69=1", # VS sel
     16: b"Qh25=1", # Baro STD (long press)
+    17: b"Qh43=1", # FPV (long press)
+    18: b"Qh44=1", # Meters (long press)
     19: b"Qh67=1", # FLCH (long press)
     23: 'q', # switch standby and COM1 (long press)
     20: b"Qh68=1", # HDG hold (long press)
@@ -78,6 +80,8 @@ button_commands = {
     34: b"Qh65=1", # LNAV
     35: 't',  # A/T ARM
     36: b"Qh71=1", # LOC
+    38: b"Qs104=FWtMGaREFWTmG", # Weather WX+T on left map on right
+    39: b"Qs104=FWTmGaREFWtMG", # Weather map on left WX+T on right
     40: b"Qh21=1", # TERR
     41: b"Qh64=1", # SPD
     42: b"Qh66=1", # VNAV

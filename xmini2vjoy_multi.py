@@ -57,10 +57,10 @@ if starting:
 
     #define properties of rotary encoders
     #                  ---------------BANK A-------------------     --------------------BANK B----------------
-    #                 BAR, MOD, RNG, SPD, HDG,  ALT,  V/S,   NAV, NAV1, NAV2, ADF , DME , HSI , key , XPDR, COM1
-    encoder_levels = (2  , 1  , 1  , 1  , 1   , 1   , 1    , 2   , 0   , 0   , 0   , 0   , 2   , 0   , 0   , 0    )  #maximum 31 in total
-    encoder_reset =  (5  , 0  , 0  , 0  , 0   , 0   , 0    , 5   , 10  , 10  , 10  , 10  , 0   , 0   , 10  , 10   )  #focus time-out in seconds
-    encoder_speed =  (1.0, 1.0, 1.0, 1.5, 1.5 , 1.8 , 1.0  , 1.3 , 1.8 , 1.8 , 1.8 , 1.8 , 1.8 , 1.0 , 1.0 , 1.8  )  #twist acceleration factor
+    #                 BAR, MOD, RNG, SPD, HDG,  ALT,  V/S,   COM1, NAV1, NAV2, ADF , DME , HSI , key , XPDR, COM1
+    encoder_levels = (2  , 1  , 1  , 1  , 1   , 1   , 1    , 2   , 1   , 1   , 1   , 1   , 1   , 1   , 1   , 1    )  #maximum 31 in total
+    encoder_reset =  (5  , 0  , 0  , 0  , 0   , 0   , 0    , 5   ,  0  ,  0  ,  0  ,  0  ,  0  , 0   , 0  ,  0   )  #focus time-out in seconds
+    encoder_speed =  (1.0, 1.0, 1.0, 1.5, 1.5 , 1.8 , 1.0  , 1.3 , 1.0 , 1.0 , 1.0 , 1.0 , 1.0, 1.0 , 1.0 , 1.0  )  #twist acceleration factor
 
     long_press_time = 0.50    # minimum duration of long press in seconds
 
