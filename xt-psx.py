@@ -69,8 +69,8 @@ button_commands = {
     5: b"Qh62=1", # ALT sel
     6: b"Qh69=1", # VS sel
     16: b"Qh25=1", # Baro STD (long press)
-    17: b"Qh43=1", # FPV (long press)
-    18: b"Qh44=1", # Meters (long press)
+    17: b"Qh22=1", # FPV (long press)
+    18: b"Qh23=1", # Meters (long press)
     19: b"Qh67=1", # FLCH (long press)
     23: 'q', # switch standby and COM1 (long press)
     20: b"Qh68=1", # HDG hold (long press)
