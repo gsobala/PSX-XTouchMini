@@ -206,12 +206,11 @@ def poll(psx, joysticks):
     
     while True:      
         for event in pygame.event.get(): # User did something
-            if event.type == pygame.JOYBUTTONDOWN:
-                print("Joystick button pressed.", event.button, event.joy)
+            if event.type == pygame.JOYBUTTONDOWN:                
                 j = myjoy.get(event.joy)    # find which joystick dict we should be using
                 joy_dict = button_commands.get(j) # load the right joystick dictionary
                 command = joy_dict.get(event.button) # find the command to be sent as client
-                
+                print("Joystick button pressed.", event.button, j)
                 if command:                     # if that button is bound to something
                     match len(command):
                         case 1:                 # single character, send as keypress
