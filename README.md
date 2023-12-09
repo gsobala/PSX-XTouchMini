@@ -25,10 +25,13 @@ by +2
 
 1. Install Vjoy from https://github.com/shauleiz/vJoy
 
+1. You may need the X-Touch Mini editor from Behringer if not already installed: find it in "Product Library -> Software" at https://www.behringer.com/product.html?modelCode=P0B3M
+
 # Customisation
 
 Out of the box the script will identify a single X-Touch Mini attached as a sole vjoy stick, and will connect it to PSX running on the same machine. A PDF is included of the default mappings. To change the mappings or to add any additional USB hardware you need to get into the code.
 
+- Initialise the X-Touch Mini using layerA.bin and layerB.bin and the X-Touch Mini editor. Load Layer A and apply to the X-Touch, then repeat for Layer B. Then close the editor - it cannot run simultaneously with FreePie.
 - Customise to your liking the accompanying FreePie script for the X-Touch Mini `xmini2vjoy_multi.py`
     written by Josep Zambrano and amended by trijet_arno. The FreePie script converts each button press and rotary movement on the X-Touch Mini to a button press on the
     vjoy virtual joystick. 
