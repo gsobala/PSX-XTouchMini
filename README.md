@@ -10,7 +10,7 @@ the FreePie script attached (not my authorship) then this script can deal with t
 
 I am afraid there is no easy GUI here, you will need to customise the code to your system but I have tried to make that simple.
 
-The precise button numbers on the vjoy device depend on how you have set up
+The precise button numbers on the vjoy device depend on how you have set up the X-Touch Mini in 
 the Freepie script - they are not constant. </p>Eg I have defined two "virtual" rotary
 encoders for the leftmost dial and this has pushed the numbering of all subsquent dials
 by +2
@@ -44,7 +44,7 @@ by +2
 - Edit `xt-psx.py`
   - Check that the PSX server host and port assignments are correct for your system. The defaults are localhost and the default PSX port.
   - go through the `connect_joysticks()` code and make sure it identifies and numbers your hardware correctly. The aim is to identify your hardware by name or other characteristics if name is ambiguous, and assign a device number 0, 1, 2... which corresponds to the mappings defined in `button_commands`
-  - go through the `button_commands` dict and assign the right commands to the right buttons. You can use PSX client codes as binary strings  eg `b"Qh69=1"`, single keyboard keys eg `'t'`, or hotkey pairs eg `['alt','z']`. Please note that PSX needs to have keyboard focus (to be the foremost selected app) for keycodes / hotkeys to be passed on, not needed for commands send client to server.
+  - go through the `button_commands` dict and assign the right commands to the right buttons. You can use PSX client codes as binary strings  eg `b"Qh69=1"`, single keyboard keys eg `'t'`, or hotkey pairs eg `['alt','z']`. Please note that PSX needs to have keyboard focus (to be the foremost selected app) for keycodes / hotkeys to be passed on, not needed for commands sent client to server.
  
 Setup can be made easier by starting FreePie with `xmini2vjoy_multi.py`, starting PSX as a server, and then running 
 `python xt-psx.py` in a terminal window: it will show a list of USB devices it has found, and once these have been identified by altering the connect_joysticks() code, it will identify button presses
