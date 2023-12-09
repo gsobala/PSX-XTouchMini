@@ -72,9 +72,17 @@ button_commands = {
     17: b"Qh22=1", # FPV (long press)
     18: b"Qh23=1", # Meters (long press)
     19: b"Qh67=1", # FLCH (long press)
-    23: 'q', # switch standby and COM1 (long press)
     20: b"Qh68=1", # HDG hold (long press)
     21: b"Qh70=1", # ALT hold (long press)
+    23: b"Qh407=7", # switch standby and COM1 (long press)
+    24: b"Qh267=1", # pull START1 (long press)
+    25: b"Qh268=1", # pull START2 (long press)
+    26: b"Qh269=1", # pull START3 (long press)
+    27: b"Qh270=1", # pull START4 (long press)
+    28: b"Qh392=1", # Fuel Cut-off1 (long press)
+    29: b"Qh393=1", # Fuel Cut-off2 (long press)
+    30: b"Qh394=1", # Fuel Cut-off3 (long press) 
+    31: b"Qh395=1", # Fuel Cut-off4 (long press)
     32: b"Qh15=1", # WXR
     33: b"Qh63=1", # THR    
     34: b"Qh65=1", # LNAV
@@ -106,13 +114,15 @@ button_commands = {
     79: b"Qh80=1", # ALT down
     80: b"Qh79=-1", # VS up
     81: b"Qh79=1", # VS down
-    82: 's', # main COM1 down
-    83: 'w', # main COM1 up
-    84: 'd', # small COM1 down
-    85: 'e', # small COM1 up
+    82: b"Qs109=0;-1;0", # main COM1 down
+    83: b"Qs109=0;1;0", # main COM1 up
+    84: b"Qs109=0;0;-1", # small COM1 down
+    85: b"Qs109=0;0;1", # small COM1 up
     },   
-# Virpil 2
-1 : {                                            # This is our virtual joystick number 1, in this example a Virpil CM3  
+# Virpil 1
+1 : {                                            # This is our virtual joystick number 1, in this example a Virpil CM3 
+    0: b"Qh386=1", # Lt Thrust Disconnect
+    3: b"Qh397=1", # Park Brk Lever
     11: b"Qh170=1", # Gear down
     12: b"Qh170=3", # Gear up
     17: b"Qh61=1", # HDG sel
@@ -122,10 +132,10 @@ button_commands = {
     21: b"Qh80=1", # ALT down
     22: b"Qh80=-1", # ALT up
     },
-# Virpil 3
+# Virpil 2
 2 : {                                          # This is our virtual joystick number 2, in this example more of the CM3
     },   
-# Virpil 4
+# Virpil 3
 3 : {                                          # This is our virtual joystick number 3, in this example even more of the CM3
     0: b"Qh60=1", # SPD sel
     1: b"Qh77=-1", # SPD up
@@ -133,6 +143,7 @@ button_commands = {
     13: b"Qh79=-1", # VS up
     14: b"Qh79=1", # VS down
     15: b"Qh69=1", # VS sel
+    31: b"Qh387=1", # Lt Thrust TOGA
     } 
 }
 
@@ -210,7 +221,7 @@ def poll(psx, joysticks):
                 j = myjoy.get(event.joy)    # find which joystick dict we should be using
                 joy_dict = button_commands.get(j) # load the right joystick dictionary
                 command = joy_dict.get(event.button) # find the command to be sent as client
-                print("Joystick button pressed.", event.button, j)
+                print("Joystick button pressed.", event.button, j, command)
                 if command:                     # if that button is bound to something
                     match len(command):
                         case 1:                 # single character, send as keypress
