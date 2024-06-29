@@ -122,6 +122,8 @@ button_commands = {
 # Virpil 1
 1 : {                                            # This is our virtual joystick number 1, in this example a Virpil CM3 
     0: b"Qh386=1", # Lt Thrust Disconnect
+    1: b"Qi191=199359", # Start Pushback
+    2: b"Qi191=120359", # Stop Pushback
     3: b"Qh397=1", # Park Brk Lever
     11: b"Qh170=1", # Gear down
     12: b"Qh170=3", # Gear up
