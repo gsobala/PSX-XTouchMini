@@ -106,14 +106,14 @@ button_commands = {
     71: ['alt','l'], # ND mode up
     72: ['alt','a'], # Range down
     73: ['alt','z'], # Range up
-    74: b"Qh77=-1", # SPD up
-    75: b"Qh77=1", # SPD down
-    76: b"Qh78=1", # HDG up
-    77: b"Qh78=-1", # HDG down
-    78: b"Qh80=1", # ALT up
-    79: b"Qh80=-1", # ALT down
-    80: b"Qh79=-1", # VS up
-    81: b"Qh79=1", # VS down
+    74: b"Qh77=-1", # SPD down
+    75: b"Qh77=1", # SPD up
+    76: b"Qh78=-1", # HDG down
+    77: b"Qh78=1", # HDG up
+    78: b"Qh80=-1", # ALT down
+    79: b"Qh80=1", # ALT up
+    80: b"Qh79=-1", # VS down
+    81: b"Qh79=1", # VS up
     82: b"Qs109=0;-1;0", # main COM1 down
     83: b"Qs109=0;1;0", # main COM1 up
     84: b"Qs109=0;0;-1", # small COM1 down
@@ -128,11 +128,11 @@ button_commands = {
     11: b"Qh170=1", # Gear down
     12: b"Qh170=3", # Gear up
     17: b"Qh61=1", # HDG sel
-    18: b"Qh78=1", # HDG down
-    19: b"Qh78=-1", # HDG up
+    18: b"Qh78=-1", # HDG down
+    19: b"Qh78=1", # HDG up
     20: b"Qh70=1", # ALT hold
-    21: b"Qh80=1", # ALT down
-    22: b"Qh80=-1", # ALT up
+    21: b"Qh80=-1", # ALT down
+    22: b"Qh80=1", # ALT up
     },
 # Virpil 2
 2 : {                                          # This is our virtual joystick number 2, in this example more of the CM3
@@ -140,10 +140,10 @@ button_commands = {
 # Virpil 3
 3 : {                                          # This is our virtual joystick number 3, in this example even more of the CM3
     0: b"Qh60=1", # SPD sel
-    1: b"Qh77=-1", # SPD up
-    2: b"Qh77=1", # SPD down 
-    13: b"Qh79=-1", # VS up
-    14: b"Qh79=1", # VS down
+    1: b"Qh77=-1", # SPD down
+    2: b"Qh77=1", # SPD up
+    13: b"Qh79=-1", # VS down
+    14: b"Qh79=1", # VS up
     15: b"Qh69=1", # VS sel
     31: b"Qh387=1", # Lt Thrust TOGA
     } 
