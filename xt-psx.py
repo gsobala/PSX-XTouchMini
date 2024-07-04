@@ -108,10 +108,10 @@ button_commands = {
     73: ['alt','z'], # Range up
     74: b"Qh77=-1", # SPD up
     75: b"Qh77=1", # SPD down
-    76: b"Qh78=-1", # HDG up
-    77: b"Qh78=1", # HDG down
-    78: b"Qh80=-1", # ALT up
-    79: b"Qh80=1", # ALT down
+    76: b"Qh78=1", # HDG up
+    77: b"Qh78=-1", # HDG down
+    78: b"Qh80=1", # ALT up
+    79: b"Qh80=-1", # ALT down
     80: b"Qh79=-1", # VS up
     81: b"Qh79=1", # VS down
     82: b"Qs109=0;-1;0", # main COM1 down
