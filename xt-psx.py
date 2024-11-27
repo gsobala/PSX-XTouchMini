@@ -141,12 +141,37 @@ button_commands = {
 3 : {                                          # This is our virtual joystick number 3, in this example even more of the CM3
     0: b"Qh60=1", # SPD sel
     1: b"Qh77=-1", # SPD down
-    2: b"Qh77=1", # SPD up
+    2: b"Qh77=1", # SPD up 
     13: b"Qh79=-1", # VS down
     14: b"Qh79=1", # VS up
     15: b"Qh69=1", # VS sel
     31: b"Qh387=1", # Lt Thrust TOGA
-    } 
+    }, 
+# WinWing FCU
+4 : {
+    11: b"Qh60=1", # SPD sel activated by pushing SPD rotary
+    15: b"Qh61=1", # HDG sel activated by pushing HDG rotary
+    19: b"Qh62=1", # ALT sel activated by pushing ALT rotary
+    23: b"Qh69=1", # VS sel activated by pushing VS rotary
+    16: b"Qh68=1", # HDG hold activated by pulling HDG rotary
+    20: b"Qh70=1", # ALT hold activated by pulling ALT rotary
+    5: 't',  # A/T ARM
+    1: b"Qh71=1", # LOC
+    3: b"Qh73=1", # CMD L
+    8: b"Qh72=1", # APP
+    9: b"Qh77=-1", # SPD down
+    10: b"Qh77=1", # SPD up
+    13: b"Qh78=-1", # HDG down
+    14: b"Qh78=1", # HDG up
+    17: b"Qh80=-1", # ALT down
+    18: b"Qh80=1", # ALT up
+    21: b"Qh79=-1", # VS down
+    22: b"Qh79=1", # VS up
+    0: b"Qh66=1", # VNAV activated by SPD MACH button
+    2: b"Qh65=1", # LNAV activated by HDG TRK VS FPA button
+    6: b"Qh67=1", # FLCH activated by EXPED button
+    12: b"Qh64=1", # SPD activated by pulling SPD rotary
+    }
 }
 
 # The next routine works out which joysticks are connected to the PC,
@@ -187,7 +212,11 @@ def connect_joysticks():
             print(f"Virpil 4 found!")
             vp4 = joystick
             myjoy.update({i : 3})  
-    joysticks = {vjoy, vp2, vp3, vp4}   # we will only pass the joysticks that we want to be "live" to the polling routine
+        if joystick.get_name() == "WINWING FCU-320":
+            print(f"WinWing FCU found!")
+            vp5 = joystick
+            myjoy.update({i : 4})  
+    joysticks = {vjoy, vp2, vp3, vp4, vp5}   # we will only pass the joysticks that we want to be "live" to the polling routine
     if not joysticks:
         print("No Joysticks found!")
         quit()
