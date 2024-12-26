@@ -171,6 +171,32 @@ button_commands = {
     2: b"Qh65=1", # LNAV activated by HDG TRK VS FPA button
     6: b"Qh67=1", # FLCH activated by EXPED button
     12: b"Qh64=1", # SPD activated by pulling SPD rotary
+    34: b"Qh19=1", # ECP DATA
+    35: b"Qh17=1", # WPT
+    36: b"Qh16=1", # STA
+    37: b"Qh20=1", # POS
+    38: b"Qh18=1", # ARPT
+    39: b"Qh25=1", # Baro STD
+    41: b"Qh30=-1", # Baro down
+    42: b"Qh30=1", # Baro up
+    43: b"Qh31=0", # Baro Mode In Hg
+    44: b"Qh31=1", # Baro Mode hPa
+    45: b"Qh32=0", #ECP modes
+    46: b"Qh32=1",
+    48: b"Qh32=2",
+    49: b"Qh32=3",
+    50: b"Qh33=1", # Ranges
+    51: b"Qh33=2",
+    52: b"Qh33=3",
+    53: b"Qh33=4",
+    54: b"Qh33=5",
+    55: b"Qh33=6",
+    56: b"Qh13=-1", # ADFVORL
+    57: b"Qh13=0",
+    58: b"Qh13=1",
+    59: b"Qh14=-1", # ADFVORR
+    60: b"Qh14=0",
+    61: b"Qh14=1"
     }
 }
 
@@ -212,7 +238,7 @@ def connect_joysticks():
             print(f"Virpil 4 found!")
             vp4 = joystick
             myjoy.update({i : 3})  
-        if joystick.get_name() == "WINWING FCU-320":
+        if joystick.get_name() == "WINWING FCU-32 + EFIS-32L":
             print(f"WinWing FCU found!")
             vp5 = joystick
             myjoy.update({i : 4})  
